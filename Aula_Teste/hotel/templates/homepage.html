@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block title %}
+    HOTEL SENAI
+{% endblock %}
+
+
+{% block body %}
+    {% for item in dados_hotel %}
+    <div class="text-center" style="padding-top: 60px;">
+        <h2>Bem-vindo ao {{item.titulo}}</h2>
+        <p style="font-size: 20px;">{{item.descricao}}</p>
+    </div>
+    {% endfor %}
+{% endblock %}

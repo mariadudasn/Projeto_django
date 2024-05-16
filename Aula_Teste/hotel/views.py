@@ -48,7 +48,7 @@ def reservas(request):
             user = reserva(nome=var_nome, sobrenome=var_sobrenome, email=var_email, idade=var_idade, endereco = var_endereco, quarto=var_quarto, data=var_data)
             user.save()
 
-            return HttpResponse("<h1>thanks</h1>")
+            return HttpResponse("<h1>Sua reserva foi feita!</h1>")
 
     # if a GET (or any other method) we'll create a blank form
     else:

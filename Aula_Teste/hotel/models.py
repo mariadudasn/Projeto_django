@@ -19,7 +19,6 @@ class hotel (models.Model):
     titulo = models.CharField(max_length=50)
     descricao = models.TextField(max_length=1800)
     logo = models.ImageField(upload_to="logo/")
-    hotel = models.ImageField(upload_to="foto_hotel/")
 
     def __str__(self):
         return self.titulo

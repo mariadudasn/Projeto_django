@@ -1,4 +1,5 @@
 {% extends 'index.html' %}
+{% load static %}
 
 {% block title %}
     HOTEL SERENITY
@@ -6,22 +7,16 @@
 
 {% block body %}
     {% for item in dados_hotel %}
-        <div style="display: flex; flex-direction: row;">
-            <div class="text-center" style="padding-top: 60px;">
-                <h2 class="sedan-sc-regular;">{{item.titulo}}</h2>
+        <div style="display: flex; flex-direction: row; padding: 70px; align-items: center;">
+            <div class="text-center" style="padding-top: 60px; padding-right: 80px">
+                <h2 class="sedan-sc-regular">{{item.titulo}}</h2>
                 <p style="font-size: 15px; padding-top: 40px;">{{item.descricao}}</p>
             </div>
             <div>
-                <img style="width: 400px; height: 300px;" src="{{item.foto_hotel.url}}" alt="Hotel"/>
+                <img style="width: 400px;" src="{% static 'img/hotel2.jpg' %}" alt="Hotel"/>
             </div>
         </div>
     {% endfor %}
+    
 {% endblock %}
 
-<style>
-    .sedan-sc-regular {
-  font-family: "Sedan SC", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-</style>

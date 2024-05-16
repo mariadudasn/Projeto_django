@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block title %}
+    HOTEL SENAI - NOME
+{% endblock %}
+
+
+{% block body %}
+    <form action="reservas" method="post">
+        <!-- Questão de segurança do site -> Sem ele, qualquer pessoa que fizesse uma requisição do tipo post iria acessar a base de dados -> Com ele, só o formulário que tiver o token irá poder fazer a requisição do método POST -->
+        {% csrf_token %}
+        {{ form }}
+        <br></br>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

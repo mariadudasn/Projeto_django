@@ -1,14 +1,29 @@
-<nav class="navbar" style="background-color: #000000; padding: 8px;">
+<nav class="navbar" style="background-color: #eaccadc0; padding: 8px;">
     {% for item in dados_hotel %}
     <div class="container-fluid">
         <div>
             <img style="width: 50px; height: 50px;" src="{{item.logo.url}}" alt="Logo"/>
-            <a style="font-size: 18px; color: #ffffff; padding-left: 5px; text-decoration-line: none;" href="http://127.0.0.1:8000/">{{item.titulo}} </a>
+            <a style="font-size: 18px; color: #000000; padding-left: 5px; text-decoration-line: none;" class="sedan-sc-regular" href="/">{{item.titulo}} </a>
         </div>
         <div>
-            <a style="font-size: 18px; padding: 5px; color: #ffffff; text-decoration-line: none;" href="http://127.0.0.1:8000/">Home</a>
-            <a style="font-size: 18px; padding: 5px; color: #ffffff; text-decoration-line: none;" href="http://127.0.0.1:8000/quartos/">Quartos</a>
+            <a style="font-size: 18px; padding: 5px; color: #000000; text-decoration-line: none;" class="sedan-sc-regular" href="/">Home</a>
+            <a style="font-size: 18px; padding: 5px; color: #000000; text-decoration-line: none;" class="sedan-sc-regular" href="quartos">Quartos</a>
+            <a style="font-size: 18px; padding: 5px; color: #000000; text-decoration-line: none;" class="sedan-sc-regular" href="reservas">Reserva</a>
         </div>
     </div>
     {% endfor %}
 </nav>
+
+<style>
+    .sacramento-regular {
+  font-family: "Sacramento", cursive;
+  font-weight: 500;
+  font-style: normal;
+}
+.sedan-sc-regular {
+  font-family: "Sedan SC", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+</style>

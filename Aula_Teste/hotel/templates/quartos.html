@@ -9,12 +9,13 @@
         <div class="text-center" style="padding-top: 60px;">
             <h2>{{item.tipo}}</h2>
             <p style="font-size: 16px; padding-left: 100px; padding-right: 100px; padding-top: 20px; padding-bottom: 20px;">{{item.descricao}}</p>
-            <img style="width: 400px; height: 300px;" src="{{item.foto_quarto.url}}" alt="{{item.tipo}}"/>
+            <img style="width: 400px; height: 300px;" src="{{item.foto_quarto.url}}" alt="Quarto"/>
             <div style="display: flex; flex-direction: row; justify-content: center; padding: 20px;">
                 <p style="padding-right: 100px;">Valor: R${{item.valor}}</p>
                 <p>Quartos disponíveis: {{item.disponibilidade}}</p>
             </div>
         </div>
+        
     {% endfor %}
 
 {% endblock %}

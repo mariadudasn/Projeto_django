@@ -48,7 +48,43 @@ def reservas(request):
             user = reserva(nome=var_nome, sobrenome=var_sobrenome, email=var_email, idade=var_idade, endereco = var_endereco, quarto=var_quarto, data=var_data)
             user.save()
 
-            return HttpResponse("<h1>Sua reserva foi feita!</h1>")
+            response_html = """
+                <html>
+                    <head>
+                        <title>Reserva Feita</title>
+                        <style>
+                            .back-button {
+                                display: inline-block;
+                                padding: 10px 20px;
+                                font-size: 16px;
+                                color: #000;
+                                background-color: #f3dbc36c;
+                                border: 2px solid #f3dbc36c;
+                                text-decoration: none;
+                                border-radius: 5px;
+                                transition: background-color 0.3s, color 0.3s;
+                            }
+
+                            .back-button:hover {
+                                background-color: #eaccadc0;
+                                color: #fff;
+                            }
+
+                            .container {
+                                text-align: center;
+                                padding: 50px;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <h1>Sua reserva foi feita!</h1>
+                            <a href="javascript:history.back()" class="back-button">Voltar</a>
+                        </div>
+                    </body>
+                </html>
+                """
+            return HttpResponse(response_html)
 
     # if a GET (or any other method) we'll create a blank form
     else:

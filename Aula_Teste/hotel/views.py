@@ -1,6 +1,11 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse, redirect
 from .models import hotel, quarto, reserva
 from .forms import FormReserva
+from .forms import FormCadastro
+from django.contrib.auth.models import User
+from .forms import FormLogin
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib import messages
 
 # Create your views here.
 def homepage(request):
@@ -11,8 +16,10 @@ def homepage(request):
     #Chave é o que o html irá conseguir movimentar
     #Por padrão o nome da lista é o nome da chave
     context["dados_hotel"] = dados_hotel
-    return render(request,'homepage.html', context)
-
+    if request.user.is_authenticated:
+        return render(request,'homepage2.html', context)
+    else:
+        return render(request,'homepage.html', context)
 
 def quartos(request):
     context = {}
@@ -79,7 +86,7 @@ def reservas(request):
                     <body>
                         <div class="container">
                             <h1>Sua reserva foi feita!</h1>
-                            <a href="javascript:history.back()" class="back-button">Voltar</a>
+                            <a href="/quartos" class="back-button">Voltar</a>
                         </div>
                     </body>
                 </html>
@@ -94,3 +101,62 @@ def reservas(request):
 
         # Vou redenrizar o que foi criado no arquivo forms
         return render(request, "reserva.html", context)
+    
+def cadastro(request):
+    context = {}
+    dados_hotel = hotel.objects.all()
+    context["dados_hotel"] = dados_hotel
+    dados_quarto = quarto.objects.all()
+    context["dados_quarto"] = dados_quarto
+    if request.method == "POST":
+        form = FormCadastro(request.POST)
+        if form.is_valid():
+            var_first_name = form.cleaned_data['first_name']
+            var_last_name = form.cleaned_data['last_name']
+            var_user = form.cleaned_data['user']
+            var_email = form.cleaned_data['email']
+            var_password = form.cleaned_data['password']
+
+            user = User.objects.create_user(username=var_user, email=var_email, password=var_password)
+            user.first_name=var_first_name
+            user.last_name=var_last_name
+            user.save()
+
+            return HttpResponse("<h1>Deu certo</h1>")
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = FormCadastro()
+
+        context['form'] = form
+
+        # Vou redenrizar o que foi criado no arquivo forms
+        return render(request, "cadastro.html", context)
+
+def login(request):
+    context = {}
+    dados_hotel = hotel.objects.all()
+    context["dados_hotel"] = dados_hotel
+    dados_quarto = quarto.objects.all()
+    context["dados_quarto"] = dados_quarto
+    if request.method == "POST":
+        form = FormLogin(request.POST)
+        if form.is_valid():
+            var_user = form.cleaned_data['user']
+            var_password = form.cleaned_data['password']
+
+            user = authenticate(username=var_user, password=var_password)
+            if user is not None:
+                auth_login(request, user)
+                return redirect('quartos')
+            else:
+                return HttpResponse("<h1>Login Invalido</h1>")
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = FormLogin()
+
+        context['form'] = form
+
+        # Vou redenrizar o que foi criado no arquivo forms
+        return render(request, "login.html", context)

@@ -4,8 +4,7 @@ from .forms import FormReserva
 from .forms import FormCadastro
 from django.contrib.auth.models import User
 from .forms import FormLogin
-from django.contrib.auth import authenticate, login as auth_login
-from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 # Create your views here.
 def homepage(request):
@@ -16,10 +15,7 @@ def homepage(request):
     #Chave é o que o html irá conseguir movimentar
     #Por padrão o nome da lista é o nome da chave
     context["dados_hotel"] = dados_hotel
-    if request.user.is_authenticated:
-        return render(request,'homepage2.html', context)
-    else:
-        return render(request,'homepage.html', context)
+    return render(request,'homepage.html', context)
 
 def quartos(request):
     context = {}
@@ -52,6 +48,7 @@ def reservas(request):
             var_quarto = form.cleaned_data['quarto']
             var_data = form.cleaned_data['data']
 
+            
             user = reserva(nome=var_nome, sobrenome=var_sobrenome, email=var_email, idade=var_idade, endereco = var_endereco, quarto=var_quarto, data=var_data)
             user.save()
 
@@ -138,7 +135,7 @@ def login(request):
     dados_hotel = hotel.objects.all()
     context["dados_hotel"] = dados_hotel
     dados_quarto = quarto.objects.all()
-    context["dados_quarto"] = dados_quarto
+    context["dados_quarto"] = dados_quarto    
     if request.method == "POST":
         form = FormLogin(request.POST)
         if form.is_valid():
@@ -150,7 +147,10 @@ def login(request):
                 auth_login(request, user)
                 return redirect('quartos')
             else:
-                return HttpResponse("<h1>Login Invalido</h1>")
+                form = FormLogin()
+                context['form'] = form
+                context['error'] = 'Nome de usuário ou senha incorretos.'
+                return render(request, "login.html", context)
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -160,3 +160,7 @@ def login(request):
 
         # Vou redenrizar o que foi criado no arquivo forms
         return render(request, "login.html", context)
+    
+def logout(request):
+    auth_logout(request)
+    return redirect('home')

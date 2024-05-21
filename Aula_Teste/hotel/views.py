@@ -23,7 +23,14 @@ def quartos(request):
     context["dados_hotel"] = dados_hotel
     dados_quarto = quarto.objects.all()
     context["dados_quarto"] = dados_quarto
-    return render(request,'quartos.html', context)
+    if request.user.is_authenticated:
+        form = FormReserva()        
+        context['form'] = form
+        # Vou redenrizar o que foi criado no arquivo forms
+        return render(request,'quartos.html', context)
+    else:
+        return redirect('home')
+    
 
 def reservas(request):
     context = {}
@@ -92,12 +99,14 @@ def reservas(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = FormReserva()
-    
-        context['form'] = form
+        if request.user.is_authenticated:
+            form = FormReserva()        
+            context['form'] = form
+            # Vou redenrizar o que foi criado no arquivo forms
+            return render(request, "reserva.html", context)
+        else:
+            return redirect('home')
 
-        # Vou redenrizar o que foi criado no arquivo forms
-        return render(request, "reserva.html", context)
     
 def cadastro(request):
     context = {}

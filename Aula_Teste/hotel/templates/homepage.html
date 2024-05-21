@@ -13,7 +13,7 @@
                 <p style="font-size: 15px; padding-top: 40px;">{{item.descricao}}</p>
             </div>
             <div>
-                <img style="width: 400px;" src="{% static 'img/hotel2.jpg' %}" alt="Hotel"/>
+                <img style="width: 400px;" src="{{item.foto_hotel.url}}" alt="Hotel"/>
             </div>
         </div>
     {% endfor %}

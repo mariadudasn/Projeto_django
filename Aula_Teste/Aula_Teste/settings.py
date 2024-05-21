@@ -131,4 +131,5 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REDIRECT_LOGIN_URL = 'quartos'
+# REDIRECT_LOGIN_URL = 'quartos'
+# REDIRECT_RESERVAS_URL = 'home'
